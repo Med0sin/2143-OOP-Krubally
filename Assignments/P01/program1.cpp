@@ -15,7 +15,18 @@ struct Node {
         next = NULL;
     }
 };
-
+/*
+ 
+        #       #  #####                              
+       #       #  #     # #        ##    ####   ####  
+      #       #   #       #       #  #  #      #      
+     #       #    #       #      #    #  ####   ####  
+    #       #     #       #      ######      #      # 
+   #       #      #     # #      #    # #    # #    # 
+  #       #        #####  ###### #    #  ####   ####  
+                                                      
+ 
+*/
 class MedVector {
 private:
     Node*           head;  // head pointer
@@ -25,6 +36,22 @@ private:
     string          fileName;
 
 public:
+    
+    
+    /*
+ 
+        #       # #     # ####### ####### #     # ####### ######   #####  
+       #       #  ##   ## #          #    #     # #     # #     # #     # 
+      #       #   # # # # #          #    #     # #     # #     # #       
+     #       #    #  #  # #####      #    ####### #     # #     #  #####  
+    #       #     #     # #          #    #     # #     # #     #       # 
+   #       #      #     # #          #    #     # #     # #     # #     # 
+  #       #       #     # #######    #    #     # ####### ######   #####  
+                                                                          
+ 
+*/
+    
+    
     MedVector() {
         init();
     }
@@ -36,7 +63,7 @@ public:
             pushRear(A[i]);
         }
     }
-
+//
     int Medvector(string FileName) {
         init();
 
@@ -114,23 +141,40 @@ public:
         }
     };
 
+void pushFront(int x) {
+        Node* tempPtr = new Node(x);
 
-    void pushfront( const Medvector& other){
-       Node*other= other.head;
-       int* tempdata = new int[other.size];
+        // empty list make head and tail
+        // point to new value
+        if (!head) {
+            head = tail = tempPtr;
 
-       int i =0;
-       while (otherptr){
-        tempData[i]= otherptr-> data;
-        otherptr = otherptr-> next;
-        ++i;
-       }      
-
-                //push list in reverse to keep it in order
-            for( int i = other.size -1; i>= 0;i--){
-                pushfront(tmepdata[i]);
-            }
+        // otherwise adjust head pointer
+        } else {
+            tempPtr->next = head;
+            head = tempPtr;
+        }
+        size++;
     }
+
+   void pushFront(const MedVector& other) {
+        Node* otherPtr = other.head;         
+        int*  tempData = new int[other.size];
+
+        // load other list into array
+        int i = 0;
+        while (otherPtr) {
+            tempData[i] = otherPtr->data;
+            otherPtr = otherPtr->next;
+            ++i;
+        }
+
+        
+        for (int i = other.size - 1; i >= 0; i--) {
+            pushFront(tempData[i]);
+        }
+    }
+
 
     
     
@@ -141,46 +185,52 @@ public:
             pushRear(otherPtr->data);
             otherPtr = otherPtr->next;}
     }
+
+
+
     void pushRear( int x){
         Node* tempptr= new Node(x);
 
         if (!head){
-            head = tail =temp;
+            head = tail =tempptr;
         }
         else { 
             tail -> next = tempptr;
-            tail -> tempptr;
+            tail = tempptr;
         }
         size++;
     }
+
+
+
      
-    friend ostream& operator << (ostream& os , const Medvector& rhs){
+    friend ostream& operator << (ostream& os , const MedVector& rhs){
         Node* temp= rhs.head;
 
 
       while (temp){
         os<< temp -> data;
         if(temp-> next){
-            os<< "->"
+            os<< "->";
         }
         temp = temp->next;
       }
       os<< endl;
       return os;
     }
-
-    ofstream Medvector::fout;
+   
+    ofstream MedVector::fout;
 
 
 int main( ) {
     MedVector V1("input.dat");
-    V1.setFilename("newfile1.out");
+    V1.setFileName("newfile1.out");
 
     MedVector V2("input2.dat");
-    V2.setFilename("newfile2.out");
+    V2.setFileName("newfile2.out");
 
     MedVector V3("input2.dat");
-    V3.setFilename("newfile3.out")
+    V3.setFileName("newfile3.out");
 
     V2.pushFront(100);
     V2.pushFront(200);
