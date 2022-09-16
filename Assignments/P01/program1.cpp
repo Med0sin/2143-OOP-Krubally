@@ -117,9 +117,22 @@ public:
 
     void pushfront( const Medvector& other){
        Node*other= other.head;
-       int
+       int* tempdata = new int[other.size];
 
+       int i =0;
+       while (otherptr){
+        tempData[i]= otherptr-> data;
+        otherptr = otherptr-> next;
+        ++i;
+       }      
+
+                //push list in reverse to keep it in order
+            for( int i = other.size -1; i>= 0;i--){
+                pushfront(tmepdata[i]);
+            }
     }
+
+    
     
     void pushRear(const MedVector& other) {
         Node* otherPtr = other.head;         // get copy of other lists head
@@ -127,4 +140,66 @@ public:
         while (otherPtr) {      // traverse and add
             pushRear(otherPtr->data);
             otherPtr = otherPtr->next;}
+    }
+    void pushRear( int x){
+        Node* tempptr= new Node(x);
+
+        if (!head){
+            head = tail =temp;
+        }
+        else { 
+            tail -> next = tempptr;
+            tail -> tempptr;
+        }
+        size++;
+    }
+     
+    friend ostream& operator << (ostream& os , const Medvector& rhs){
+        Node* temp= rhs.head;
+
+
+      while (temp){
+        os<< temp -> data;
+        if(temp-> next){
+            os<< "->"
+        }
+        temp = temp->next;
+      }
+      os<< endl;
+      return os;
+    }
+
+    ofstream Medvector::fout;
+
+
+int main( ) {
+    MedVector V1("input.dat");
+    V1.setFilename("newfile1.out");
+
+    MedVector V2("input2.dat");
+    V2.setFilename("newfile2.out");
+
+    MedVector V3("input2.dat");
+    V3.setFilename("newfile3.out")
+
+    V2.pushFront(100);
+    V2.pushFront(200);
+    V2.pushFront(300);
+    V2.pushFront(400);
+
+    V2.pushFront(V1);
+
+    cout << V1 << endl;
+    cout << V2 << endl;
+    cout << V3 << endl;  
+
+    V1.print(true);
+    V2.print(true);
+    V3.print(true);
+
+
+
+
+
+
     }
