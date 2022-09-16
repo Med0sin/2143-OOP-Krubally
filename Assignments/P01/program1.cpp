@@ -232,10 +232,12 @@ int main( ) {
     MedVector V3("input2.dat");
     V3.setFileName("newfile3.out");
 
-    V2.pushFront(100);
-    V2.pushFront(200);
+    V1.pushFront(100);
+    V1.pushrear(200);
     V2.pushFront(300);
-    V2.pushFront(400);
+    V2.pushrear(400);
+    V3.pushFront(500);
+    V3.pushrear(V1);
 
     V2.pushFront(V1);
 
