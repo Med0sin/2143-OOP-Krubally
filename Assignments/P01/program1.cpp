@@ -296,7 +296,7 @@ public:
     travel = head;
     int count=0;
     
-  for( count; count < d;){
+  for( count=0; count < d;){
     traveling = travel;
       travel = travel-> next;
     count++;
