@@ -1,3 +1,4 @@
+//Ahmed krubally
 //Program 4 rock paper scissors lizard spock- this program creates a game of rock paper scissors that is only played by the cpu. 
 //There will be 2 players and they will play agasint each other and there will be a function to determines who wins 
 #include <algorithm>
