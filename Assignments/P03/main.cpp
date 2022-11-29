@@ -130,7 +130,7 @@ int main() {
   //opening massage for the game 
 cout  << "Welcome to Blackjack!" << endl<< "Aces count as 1 and the max cards to hold is 5" << endl;
 cout<< "You begin the game with 100 dollars" << endl ;
-cout <<"----------------------------------------" << endl << endl;
+cout <<"******************************************" << endl << endl;
 
   //variables used to determine if the player can continue playing 
   //how much they bet, and how much they can bet
