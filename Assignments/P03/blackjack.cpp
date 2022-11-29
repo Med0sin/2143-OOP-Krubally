@@ -12,7 +12,7 @@
 
 using namespace std;
 
-typedef map<string, string> printableCard;
+typedef map<string, string> showcard;
 
 const string spade = "♠";
 const string diamond = "♦";
@@ -79,7 +79,7 @@ public:
 		return bcolor;
 	}
 
-	printableCard cardmaker() {
+	showcard cardmaker() {
 		string content;
 
 		// only 2 digit rank
@@ -89,7 +89,7 @@ public:
 			content = " " + suitChar + rankChar;
 		}
 
-		printableCard p{{"TOP", fcolor + bcolor + "┌────┐"},
+		showcard p{{"TOP", fcolor + bcolor + "┌────┐"},
 						{"MID", fcolor + bcolor + "│" + content + "│"},
 						{"BOT", fcolor + bcolor + "└────┘" + OFF}};
 

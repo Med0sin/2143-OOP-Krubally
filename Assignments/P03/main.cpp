@@ -129,17 +129,17 @@ int main() {
 
   //opening massage for the game 
 cout  << "Welcome to Blackjack!" << endl<< "Aces count as 1 and the max cards to hold is 5" << endl;
-cout<< "You begin the game with 100 dollars" << endl<< ;
-cout <<"----------------------------------------" << \n << endl;
+cout<< "You begin the game with 100 dollars" << endl ;
+cout <<"----------------------------------------" << endl << endl;
 
   //variables used to determine if the player can continue playing 
   //how much they bet, and how much they can bet
-  string Continue = "y";
+  string PLAY = "y";
   int Betting = 0;
   int Cash = 100;
 
   //ONlY run if the player says Yes and has the funds to continue
-  while (Continue == "y" && !(Cash < 1))
+  while (PLAY == "y" && !(Cash < 1))
     {
       cout << "Enter a betting amount: ";
       cin >> Betting;
@@ -170,10 +170,10 @@ srand(time(0));//What is this for, i just copied this from the code from class
 
     //show the cards for the player and the dealer for the beginnig of the game 
     cout << endl << endl << "Your initial cards:";
-    cout << \n << \n;
+    cout << endl << endl;
     printset(PlayerHand, 2);
     cout << "The dealer's visible card:";
-    cout << \n << \n;
+    cout << endl << endl;
     printCard(DealerHand);
 
 
@@ -188,7 +188,7 @@ srand(time(0));//What is this for, i just copied this from the code from class
   {
     cout << endl;
     cout << "Enter \'Hit me\' to hit or type anything to stand: ";
-    cin >> keepPlaying;
+    cin >> PLAY;
     cout << endl;
     // if the player wants to hit, draw them a new card and print it out
       if (continue2== "Hit Me")
@@ -296,7 +296,7 @@ srand(time(0));//What is this for, i just copied this from the code from class
       {
       cout << endl;
       cout << "Enter Y to play again or anything else to stop: ";
-      cin >> Continue;
+      cin >> PLAY;
       cout << endl;
         }
     // if the player has no more money, the loop will end 
