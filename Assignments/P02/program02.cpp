@@ -6,7 +6,7 @@
  *  Semester:         Fall 2022
  *
  *  Description:
- *   create a linked list based Vector class that will include the functionality listed below. 
+ *  create a linked list based Vector class that will include the functionality listed below. 
  * You will achieve this by writing additional methods to add values, remove values, and maintain 
  * sorted values if needed.This class also needs the ability to be initialized with different
  *  data sources (files, other vectors, and arrays). then overload a set of operators such as the the <<,>>,+,-
