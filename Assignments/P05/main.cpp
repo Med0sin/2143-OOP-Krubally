@@ -336,36 +336,6 @@ void Addarmy1(vector<BaseFighter*> & Army, int armySize, vector<string> & Choice
     }
 }
 
-void CheckBattle(int & BattlesFought, int & teamWhoWon)
-{
-  BattlesFought++;
-  teamWhoWon++;
-}
-
-void deadsoul(vector<BaseFighter*> & Army, BaseFighter * & Unit)
-{
-  Army.pop_back();
-  if (Army.size() > 0)
-  {
-    Unit = Army.back();
-  }
-}
-
-void showaftermath(int army1wins, int army2wins, int BattlesFought, string winner, ofstream & outfile)
-{
-     outfile << "Final Stats" << endl;
-    outfile << "-------------------------" << endl;
-    outfile << "Team One Round Wins: " << army1wins << endl;
-    outfile << "Team Two Round Wins: " << army2wins << endl;
-    outfile  << "Battles fought: " << BattlesFought << endl;
-    outfile << "The Winner is " << winner << endl;
-    outfile << "percent of battle won by Defenders: " <<
-    ((double)army1wins / BattlesFought) * 100 << "%" << endl;
-    outfile << "percent of battle won by Attackers: " <<
-    ((double)army2wins / BattlesFought) * 100 << "%";
-}
-
-
 void makechoice(string character, vector<string> & Choices)
 {
   //create choice list for character type put in
@@ -398,6 +368,33 @@ void makechoice(string character, vector<string> & Choices)
   {
   Choices.push_back("1.d.6");
   Choices.push_back("1.d.8");
+  }
+}
+
+void showaftermath(int army1wins, int army2wins, int BattlesFought, string winner, ofstream & outfile)
+{
+     outfile << "Final results of the battle" << endl;
+    outfile << "*****************************" << endl;
+    outfile << "Attacking side Round Wins: " << army1wins << endl;
+    outfile << "Defending side Round Wins: " << army2wins << endl;
+    outfile  << "Battles completed: " << BattlesFought << endl;
+    outfile << "The Winner of this war is " << winner << endl;
+   
+}
+
+
+void CheckBattle(int & BattlesFought, int & teamWhoWon)
+{
+  BattlesFought++;
+  teamWhoWon++;
+}
+
+void deadsoul(vector<BaseFighter*> & Army, BaseFighter * & Unit)
+{
+  Army.pop_back();
+  if (Army.size() > 0)
+  {
+    Unit = Army.back();
   }
 }
 
