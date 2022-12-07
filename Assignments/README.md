@@ -1,5 +1,6 @@
 ##  Assignments Folder
 
-|   #   | Folder Link | Assignment Description |
-| :---: | ----------- | ---------------------- |
-|       |             |                        |
+|   #   | Folder Link          | Assignment Description |
+| :---: | -------------------- | ---------------------- |
+|   1   | [A03](A03/README.md) | [A03](A03/README.md)   |
+[A]
