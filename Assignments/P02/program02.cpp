@@ -427,40 +427,40 @@ ofstream& operator>>(ofstream& os, const Medvector& M) {
 Medvector& operator+(const Medvector& a, const Medvector& b) {
         Medvector M;
 
-        Node* traverse1 = a.head;
-        Node* traverse2 = b.head;
+        Node*  travel1 = a.head;
+        Node*  travel2 = b.head;
 
         int aSize = 0;
         int bSize = 0;
 
         //  getting the sizes of the vectors that will be added 
-        while (traverse1) {
+        while ( travel1) {
             aSize++;
-            traverse1 = traverse1->next;
+             travel1 =  travel1->next;
         }
-        while (traverse2) {
+        while ( travel2) {
             bSize++;
-            traverse2 = traverse2->next;
+             travel2 =  travel2->next;
         }
 
         // repointing traverse to heads
-        traverse1 = a.head;
-        traverse2 = b.head;
+         travel1 = a.head;
+         travel2 = b.head;
         // checks if the first vector is larger that the other 
         if (aSize > bSize) {
             // adds the elements of both vectors and pushes to the rear 
             for (int i = 0; i != bSize; i++) {
-                M.pushRear(traverse1->data + traverse2->data);
-                traverse1 = traverse1->next;
-                traverse2 = traverse2->next;
+                M.pushRear( travel1->data +  travel2->data);
+                 travel1 =  travel1->next;
+                 travel2 =  travel2->next;
             }
             // pushes the remaining elements of the first vector
-            while (traverse1) {
-                M.pushRear(traverse1->data);
-                traverse1 = traverse1->next;
+            while ( travel1) {
+                M.pushRear( travel1->data);
+                 travel1 =  travel1->next;
             }
-            delete traverse1;
-            delete traverse2;
+            delete  travel1;
+            delete  travel2;
             return M;
         }
 
@@ -468,29 +468,29 @@ Medvector& operator+(const Medvector& a, const Medvector& b) {
         else if (bSize > aSize) {
             // adds the elements and pushes to new vector
             for (int i = 0; i != aSize; i++) {
-                M.pushRear(traverse1->data + traverse2->data);
-                traverse1 = traverse1->next;
-                traverse2 = traverse2->next;
+                M.pushRear( travel1->data +  travel2->data);
+                 travel1 =  travel1->next;
+                 travel2 =  travel2->next;
             }
             //pushes the remaining elements in the second vector 
-            while (traverse2) {
-                M.pushRear(traverse2->data);
-                traverse2 = traverse2->next;
+            while ( travel2) {
+                M.pushRear( travel2->data);
+                 travel2 =  travel2->next;
             }
-            delete traverse1;
-            delete traverse2;
+            delete  travel1;
+            delete  travel2;
             return M;
         }
 
         else {
             // adds the elements and pushes them to the new vector
-            while (traverse1) {
-                M.pushRear(traverse1->data + traverse2->data);
-                traverse1 = traverse1->next;
-                traverse2 = traverse2->next;
+            while ( travel1) {
+                M.pushRear( travel1->data +  travel2->data);
+                 travel1 =  travel1->next;
+                 travel2 =  travel2->next;
             }
-            delete traverse1;
-            delete traverse2;
+            delete  travel1;
+            delete  travel2;
             return M;
         }
 
@@ -500,40 +500,40 @@ Medvector& operator+(const Medvector& a, const Medvector& b) {
 Medvector& operator-(const Medvector& a, const Medvector& b) {
     Medvector M;
 
-    Node* traverse1 = a.head;
-    Node* traverse2 = b.head;
+    Node*  travel1 = a.head;
+    Node*  travel2 = b.head;
 
     int aSize = 0;
     int bSize = 0;
 
     //  getting the sizes of the vectors that will be added 
-    while (traverse1) {
+    while ( travel1) {
         aSize++;
-        traverse1 = traverse1->next;
+         travel1 =  travel1->next;
     }
-    while (traverse2) {
+    while ( travel2) {
         bSize++;
-        traverse2 = traverse2->next;
+         travel2 =  travel2->next;
     }
 
     // repointing traverse to heads
-    traverse1 = a.head;
-    traverse2 = b.head;
+     travel1 = a.head;
+     travel2 = b.head;
     // checks if the first vector is larger that the other 
     if (aSize > bSize) {
         // adds the elements of both vectors and pushes to the rear 
         for (int i = 0; i != bSize; i++) {
-            M.pushRear(traverse1->data - traverse2->data);
-            traverse1 = traverse1->next;
-            traverse2 = traverse2->next;
+            M.pushRear( travel1->data -  travel2->data);
+             travel1 =  travel1->next;
+             travel2 =  travel2->next;
         }
         // pushes the remaining elements of the first vector
-        while (traverse1) {
-            M.pushRear(traverse1->data);
-            traverse1 = traverse1->next;
+        while ( travel1) {
+            M.pushRear( travel1->data);
+             travel1 =  travel1->next;
         }
-        delete traverse1;
-        delete traverse2;
+        delete  travel1;
+        delete  travel2;
         return M;
     }
 
@@ -541,29 +541,29 @@ Medvector& operator-(const Medvector& a, const Medvector& b) {
     else if (bSize > aSize) {
         // adds the elements and pushes to new vector
         for (int i = 0; i != aSize; i++) {
-            M.pushRear(traverse1->data - traverse2->data);
-            traverse1 = traverse1->next;
-            traverse2 = traverse2->next;
+            M.pushRear( travel1->data -  travel2->data);
+             travel1 =  travel1->next;
+             travel2 =  travel2->next;
         }
         //pushes the remaining elements in the second vector 
-        while (traverse2) {
-            M.pushRear(traverse2->data);
-            traverse2 = traverse2->next;
+        while ( travel2) {
+            M.pushRear( travel2->data);
+             travel2 =  travel2->next;
         }
-        delete traverse1;
-        delete traverse2;
+        delete  travel1;
+        delete  travel2;
         return M;
     }
 
     else {
         // adds the elements and pushes them to the new vector
-        while (traverse1) {
-            M.pushRear(traverse1->data - traverse2->data);
-            traverse1 = traverse1->next;
-            traverse2 = traverse2->next;
+        while ( travel1) {
+            M.pushRear( travel1->data -  travel2->data);
+             travel1 =  travel1->next;
+             travel2 =  travel2->next;
         }
-        delete traverse1;
-        delete traverse2;
+        delete  travel1;
+        delete  travel2;
         return M;
     }
 }
@@ -572,40 +572,40 @@ Medvector& operator-(const Medvector& a, const Medvector& b) {
 Medvector& operator*(const Medvector& a, const Medvector& b) {
     Medvector M;
 
-    Node* traverse1 = a.head;
-    Node* traverse2 = b.head;
+    Node*  travel1 = a.head;
+    Node*  travel2 = b.head;
 
     int aSize = 0;
     int bSize = 0;
 
     //  getting the sizes of the vectors that will be added 
-    while (traverse1) {
+    while ( travel1) {
         aSize++;
-        traverse1 = traverse1->next;
+         travel1 =  travel1->next;
     }
-    while (traverse2) {
+    while ( travel2) {
         bSize++;
-        traverse2 = traverse2->next;
+         travel2 =  travel2->next;
     }
 
     // repointing traverse to heads
-    traverse1 = a.head;
-    traverse2 = b.head;
+     travel1 = a.head;
+     travel2 = b.head;
     // checks if the first vector is larger that the other 
     if (aSize > bSize) {
         // adds the elements of both vectors and pushes to the rear 
         for (int i = 0; i != bSize; i++) {
-            M.pushRear(traverse1->data * traverse2->data);
-            traverse1 = traverse1->next;
-            traverse2 = traverse2->next;
+            M.pushRear( travel1->data *  travel2->data);
+             travel1 =  travel1->next;
+             travel2 =  travel2->next;
         }
         // pushes the remaining elements of the first vector
-        while (traverse1) {
-            M.pushRear(traverse1->data);
-            traverse1 = traverse1->next;
+        while ( travel1) {
+            M.pushRear( travel1->data);
+             travel1 =  travel1->next;
         }
-        delete traverse1;
-        delete traverse2;
+        delete  travel1;
+        delete  travel2;
         return M;
     }
 
@@ -613,29 +613,29 @@ Medvector& operator*(const Medvector& a, const Medvector& b) {
     else if (bSize > aSize) {
         // adds the elements and pushes to new vector
         for (int i = 0; i != aSize; i++) {
-            M.pushRear(traverse1->data * traverse2->data);
-            traverse1 = traverse1->next;
-            traverse2 = traverse2->next;
+            M.pushRear( travel1->data *  travel2->data);
+             travel1 =  travel1->next;
+             travel2 =  travel2->next;
         }
         //pushes the remaining elements in the second vector 
-        while (traverse2) {
-            M.pushRear(traverse2->data);
-            traverse2 = traverse2->next;
+        while ( travel2) {
+            M.pushRear( travel2->data);
+             travel2 =  travel2->next;
         }
-        delete traverse1;
-        delete traverse2;
+        delete  travel1;
+        delete  travel2;
         return M;
     }
 
     else {
         // adds the elements and pushes them to the new vector
-        while (traverse1) {
-            M.pushRear(traverse1->data * traverse2->data);
-            traverse1 = traverse1->next;
-            traverse2 = traverse2->next;
+        while ( travel1) {
+            M.pushRear( travel1->data *  travel2->data);
+             travel1 =  travel1->next;
+             travel2 =  travel2->next;
         }
-        delete traverse1;
-        delete traverse2;
+        delete  travel1;
+        delete  travel2;
         return M;
     }
 }
@@ -644,40 +644,40 @@ Medvector& operator*(const Medvector& a, const Medvector& b) {
 Medvector& operator/(const Medvector& a, const Medvector& b) {
     Medvector M;
 
-    Node* traverse1 = a.head;
-    Node* traverse2 = b.head;
+    Node*  travel1 = a.head;
+    Node*  travel2 = b.head;
 
     int aSize = 0;
     int bSize = 0;
 
     //  getting the sizes of the vectors that will be added 
-    while (traverse1) {
+    while ( travel1) {
         aSize++;
-        traverse1 = traverse1->next;
+         travel1 =  travel1->next;
     }
-    while (traverse2) {
+    while ( travel2) {
         bSize++;
-        traverse2 = traverse2->next;
+         travel2 =  travel2->next;
     }
 
     // repointing traverse to heads
-    traverse1 = a.head;
-    traverse2 = b.head;
+     travel1 = a.head;
+     travel2 = b.head;
     // checks if the first vector is larger that the other 
     if (aSize > bSize) {
         // adds the elements of both vectors and pushes to the rear 
         for (int i = 0; i != bSize; i++) {
-            M.pushRear(traverse1->data / traverse2->data);
-            traverse1 = traverse1->next;
-            traverse2 = traverse2->next;
+            M.pushRear( travel1->data /  travel2->data);
+             travel1 =  travel1->next;
+             travel2 =  travel2->next;
         }
         // pushes the remaining elements of the first vector
-        while (traverse1) {
-            M.pushRear(traverse1->data);
-            traverse1 = traverse1->next;
+        while ( travel1) {
+            M.pushRear( travel1->data);
+             travel1 =  travel1->next;
         }
-        delete traverse1;
-        delete traverse2;
+        delete  travel1;
+        delete  travel2;
         return M;
     }
 
@@ -685,55 +685,55 @@ Medvector& operator/(const Medvector& a, const Medvector& b) {
     else if (bSize > aSize) {
         // adds the elements and pushes to new vector
         for (int i = 0; i != aSize; i++) {
-            M.pushRear(traverse1->data / traverse2->data);
-            traverse1 = traverse1->next;
-            traverse2 = traverse2->next;
+            M.pushRear( travel1->data /  travel2->data);
+             travel1 =  travel1->next;
+             travel2 =  travel2->next;
         }
         //pushes the remaining elements in the second vector 
-        while (traverse2) {
-            M.pushRear(traverse2->data);
-            traverse2 = traverse2->next;
+        while ( travel2) {
+            M.pushRear( travel2->data);
+             travel2 =  travel2->next;
         }
-        delete traverse1;
-        delete traverse2;
+        delete  travel1;
+        delete  travel2;
         return M;
     }
 
     else {
         // adds the elements and pushes them to the new vector
-        while (traverse1) {
-            M.pushRear(traverse1->data / traverse2->data);
-            traverse1 = traverse1->next;
-            traverse2 = traverse2->next;
+        while ( travel1) {
+            M.pushRear( travel1->data /  travel2->data);
+             travel1 =  travel1->next;
+             travel2 =  travel2->next;
         }
-        delete traverse1;
-        delete traverse2;
+        delete  travel1;
+        delete  travel2;
         return M;
     }
 }
 
 //Overload == (equality)
 bool operator==(const Medvector& a, const Medvector& b) {
-    Node* traverse1 = a.head;
-    Node* traverse2 = b.head;
+    Node*  travel1 = a.head;
+    Node*  travel2 = b.head;
 
     int aSize = 0;
     int bSize = 0;
     int total = 0;
 
     //  getting the sizes of the vectors that will be added 
-    while (traverse1) {
+    while ( travel1) {
         aSize++;
-        traverse1 = traverse1->next;
+         travel1 =  travel1->next;
     }
-    while (traverse2) {
+    while ( travel2) {
         bSize++;
-        traverse2 = traverse2->next;
+         travel2 =  travel2->next;
     }
 
     // repointing traverse to heads
-    traverse1 = a.head;
-    traverse2 = b.head;
+     travel1 = a.head;
+     travel2 = b.head;
     // checks if the first vector is larger that the other 
     if (aSize > bSize) {
         return false;
@@ -746,16 +746,16 @@ bool operator==(const Medvector& a, const Medvector& b) {
 
     else {
         // adds the elements and pushes them to the new vector
-        while (traverse1) {
-            if (traverse1->data == traverse2->data) {
+        while ( travel1) {
+            if ( travel1->data ==  travel2->data) {
                 // increment count every time the elements are equal
                 total++;
             }
-            traverse1 = traverse1->next;
-            traverse2 = traverse2->next;
+             travel1 =  travel1->next;
+             travel2 =  travel2->next;
         }
-        delete traverse1;
-        delete traverse2;
+        delete  travel1;
+        delete  travel2;
 
         if (total == aSize) {
             return true;
@@ -772,19 +772,20 @@ ofstream Medvector::fout;
 int main() {
     Medvector V1;
 
-    V1.pushFront(56);
-    V1.pushFront(42);
-    V1.pushFront(30);
-    V1.pushFront(48);
+    V1.pushFront(76);
+    V1.pushFront(22);
+    V1.pushFront(94);
+    V1.pushFront(54);
 
     V1.pushFront(V1);
 
     cout << V1 << endl;
+    //print out the vector 1
 
     V1.sortList();
     cout << V1 << endl;
 
-    V1.pushAt(3, 88);
+    V1.pushAt(3, 15);
     cout << V1 << endl;
     V1.sortList();
     cout << V1 << endl;
@@ -801,11 +802,7 @@ int main() {
     ofstream outfile;
     outfile.open("output.txt");
      
-    //cout << v1[2] << endl;
-    // writes out 3
-
-    //v1[4] = 9;
-    // v1 now = [1,2,3,4,9]
+  
 
     cout << V3 << endl;
     // writes out [1,2,3,4,9] to console.
@@ -815,38 +812,32 @@ int main() {
 
     Medvector V5 = V3 + V4;
     cout << V5 << endl;
-    // writes out [11,22,33,4,9] to console.
+    //adds the vector 3 and 4 to create 5
 
     V5 = V3 - V4;
     cout << V5 << endl;
-    // writes out [-9,-18,-27,4,9] to console.
+    // subtracts vectors 3 and 4 to make vector 5
 
-    V5 = V3 - V4;
-    cout << V5 << endl;
-    // writes out [9,18,27,4,9] to console.
 
     V5 = V3 * V4;
     cout << V5 << endl;
-    // writes out [10,40,90,4,9] to console.
+    // multiples vectos 3 and 4 to make 5
 
-    V5 = V3 * V4;
-    cout << V5 << endl;
-    // writes out [10,40,90,4,9] to console.['
 
     V5 = V3 / V4;
     cout << V5 << endl;
-    // writes out [0,0,0,4,9] to console.
+    // divides vector 3 and 4 to make a new 5 vector
 
     V5 = V4 / V3;
     cout << V5 << endl;
-    // writes out [10,10,10,4,9] to console.
+    // reverses the divions from above
 
     cout << (V4 == V3) << endl;
-    // writes 0 to console (false) .
+    // checks to see if the two vectors are the same 
 
     Medvector V6 = V3;
     cout << (V6 == V3) << endl;
-    // writes 1 to console (true) . 
+    // checks to see if the new vectors are the same. 
     
     outfile.close();
 }
