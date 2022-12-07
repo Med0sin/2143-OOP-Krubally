@@ -367,7 +367,7 @@ public:
     }
 
     
-    //START OF PROGRAM 2
+    //Overloaded operators for the objective of program 2
     
 
     //Overload << (ostream) so that printing to std out is easy
