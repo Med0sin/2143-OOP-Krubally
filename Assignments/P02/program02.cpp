@@ -1,896 +1,852 @@
 /*****************************************************************************
- *
- *  Author:           ahmed krubally
- *  Title:            vectors 
- *  Course:           2143
- *  Semester:         Fall 2022
- *
- *  Description:
- *  create a linked list based Vector class that will include the functionality listed below. 
- * You will achieve this by writing additional methods to add values, remove values, and maintain 
- * sorted values if needed.This class also needs the ability to be initialized with different
- *  data sources (files, other vectors, and arrays). then overload a set of operators such as the the <<,>>,+,-
- * ,/,==,=, operators.
- * 
- *  
- *        
- *
- *  Usage:
- *   allows the user to create a war simulation for two sides
- *
-
+*
+*  Author:          Ahmed krubally
+*  Title:            Singly linked list vector implementation
+*  Course:           2143
+*  Semester:         Fall 2021
+*
+*  Description:
+*        Uses a singly linked list program and overload additional operators
+*
+*****************************************************************************/
 #include <fstream>
 #include <iostream>
 #include <string>
 
-using namespace std;
+#define INF = 1000000000
 
+using namespace std;
 
 // Node for our linked list
 struct Node {
-  int data;
-  Node *previous;
-  Node *next;
+    int data;
 
-  Node(int x) {
-    data = x;
-    next = NULL;
-    previous = NULL;
-  }
+    Node* next;
+
+    Node(int x) {
+        data = x;
+        next = NULL;
+    }
 };
+
+
 /*
-
-        #       #  #####
-       #       #  #     # #        ##    ####   ####
-      #       #   #       #       #  #  #      #
-     #       #    #       #      #    #  ####   ####
-    #       #     #       #      ######      #      #
-   #       #      #     # #      #    # #    # #    #
-  #       #        #####  ###### #    #  ####   ####
-
-
+ 
+    ,                                                                                                                                                                                                                                                                                            
+  ,'                                                                                                                                                                                                                                                                                             
+ '                                                                                                                                                                                                                                                                                               
+                                                                                                                                                                                                                                                                                                 
+          ,      ,      ,    ,          ,      ,        ,    ,       .    .       ,        ,      ,    ,       .    .       ,    ,       .    .                   ,    ,       .    .         ,      ,                    ,    ,                  ,    ,       .    .       ,    ,       .    .  
+        ,'     ,'     ,'   ,'         ,'     ,'       ,'   ,'         )    )    ,'       ,'     ,'   ,'         )    )    ,'   ,'         )    )                ,'   ,'         )    )      ,'     ,'                   ,'   ,'                 ,'   ,'         )    )    ,'   ,'         )    ) 
+       '      '      '    '          '      '        '    '          '    '    '        '      '    '          '    '    '    '          '    '                '    '          '    '      '      '                    '    '                  '    '          '    '    '    '          '    '  
+                                                                                                                                                                                                                                                                                                 
+        ,      ,      ,    ,            ,    ,                        ,      ,            ,    ,          ,      ,      ,    ,    ,      ,                  ,    ,                    ,      ,                    ,    ,            .  .                .  .                                     
+      ,'     ,'     ,'   ,'           ,'   ,'                       ,'     ,'           ,'   ,'         ,'     ,'     ,'   ,'   ,'     ,'                 ,'   ,'                   ,'     ,'                   ,'   ,'            (  (                (  (                                      
+     '      '      '    '            '    '                        '      '            '    '          '      '      '    '    '      '                  '    '                    '      '                    '    '               `  `                `  `                                     
+                                                                                                                                                                                                                                                                                                 
+      ,      ,      ,              ,    ,                        ,      ,            ,    ,          ,      ,      ,      .                    ,    ,                    ,      ,                    ,                   ,    ,                  ,    ,                                          
+    ,'     ,'     ,'             ,'   ,'                       ,'     ,'           ,'   ,'         ,'     ,'     ,'      (                   ,'   ,'                   ,'     ,'                   ,'                     `,   `,                 `,   `,                                        
+   '      '      '              '    '                        '      '            '    '          '      '      '         `                 '    '                    '      '                    '                         `    `                  `    `                                       
+                                                                                                                                                                                                                                                                                                 
+    ,      ,      ,    ,                    ,    ,                        ,      ,            ,    ,          ,      ,      ,    ,                          ,    ,                    ,      ,                    ,    ,                           .    .              .    .                    
+  ,'     ,'     ,'   ,'                   ,'   ,'                       ,'     ,'           ,'   ,'         ,'     ,'     ,'   ,'                         ,'   ,'                   ,'     ,'                   ,'   ,'                             )    )              )    )                   
+ '      '      '    '                    '    '                        '      '            '    '          '      '      '    '                          '    '                    '      '                    '    '                              '    '              '    '                    
+                                                                                                                                                                                                                                                                                                 
+        ,      ,    ,    ,      ,    .  .    ,      ,          ,      ,          .  .    ,      ,      ,    ,                        .  .    ,      ,      ,      ,    ,      ,      ,    ,                .  .      ,      ,  .  .      ,      ,                                                
+      ,'     ,'   ,'   ,'     ,'    (  (   ,'     ,'         ,'     ,'          (  (   ,'     ,'     ,'   ,'                        (  (   ,'     ,'     ,'     ,'   ,'     ,'     ,'   ,'                (  (     ,'     ,'  (  (     ,'     ,'                                                 
+     '      '    '    '      '       `  ` '      '          '      '             `  ` '      '      '    '                           `  ` '      '      '      '    '      '      '    '                   `  `   '      '     `  `   '      '                                                   
+                                                                                                                                                                                                                                                                                                 
+    ,                                                                                                                                                                                                                                                                                            
+  ,'                                                                                                                                                                                                                                                                                             
+ '                                                                                                                                                                                                                                                                                               
+                                                                                                                                                                                                                                                                                                 
+ 
 */
-class MedVector {
+
+class Medvector {
 private:
-  Node *head; // head pointer
-  Node *tail; // tail pointer
-  int size;
-  ofstream fout;
-  string fileName;
+    Node* head;  // base pointer of list
+    Node* tail;
+    int size;
+    static ofstream fout;
+    string infileName;
+    bool sorted;
+
+    /**
+     *  function Private version of inOrder push.
+     *
+     *  parameters x
+     */
+    void _ Pushinorder(int x) {
+        Node* tempPtr = new Node(x);  // allocate new node
+        Node* prev = head;            // get previous and next pointers
+        Node* curr = head;
+
+        while (curr->data > x) {  // loop to find proper location
+            prev = curr;
+            curr = curr->next;
+        }
+
+        tempPtr->next = prev->next;  // add new node in its proper position
+        prev->next = tempPtr;
+
+        size++;  // add to size :)
+    }
+
 public:
-  /*
-      #       # #     # ####### ####### #     # ####### ######   #####
-     #       #  ##   ## #          #    #     # #     # #     # #     #
-    #       #   # # # # #          #    #     # #     # #     # #
-   #       #    #  #  # #####      #    ####### #     # #     #  #####
-  #       #     #     # #          #    #     # #     # #     #       #
- #       #      #     # #          #    #     # #     # #     # #     #
-#       #       #     # #######    #    #     # ####### ######   #####
-*/
-int A[];
-  // class constructor
-  MedVector() {
-    head = tail = NULL;
-    fileName = "";
-    size = 0;
-  }
-  // overloaded class constructor for the array
-  MedVector(int A[], int aSize) {
-
-    head = tail = NULL;
-    fileName = "";
-    size = aSize;
-
-    for (int i = 0; i < aSize; i++) {
-      pushRear(A[i]);
-    }
-  }
-  // function to open a file and run the values of the file on to the rear emd
-  // of the list
-  MedVector(string FileName) {
-
-    head = tail = NULL;
-    fileName = "";
-
-    ifstream fin;
-    int x = 0;
-    int i = 0;
-
-    fin.open(FileName);
-    while (fin >> x) {
-      pushRear(x);
-      i++;
-    }
-    size = i;
-  }
-  // function to push the "other data"
-  MedVector(const MedVector &other) {
-    init(other.size);
-
-    Node *temp = other.head;
-
-    while (temp) {
-      pushRear(temp->data);
-      temp = temp->next;
-    }
-  }
-
-  void init(int s) {}
-  // seting the a newfile name
-  void setFileName(string fname) { fileName = fname; }
-
-  // prints to file
-  void print(bool printFile = 0) {
-    if (printFile) {
-      fout.open(fileName, ofstream::out | ofstream::trunc);
+    /**
+     *  function Default constructor
+     *
+     */
+    Medvector() {
+        init();
     }
 
-    cout << "[";
-    if (printFile) {
-      fout << "[";
-    }
+    /**
+     *  function Overloaded Constructor
+     *
+     *  parameters int   *A - pointer to array
+     *  parameters int   aSize - size of array
+     */
+    Medvector(int A[], int aSize) {
+        init();
 
-    Node *temp = head;
-
-    while (temp) {
-      cout << temp->data;
-
-      if (printFile) {
-        fout << temp->data;
-      }
-
-      if (temp->next) {
-        cout << ",";
-        if (printFile) {
-          fout << ",";
+        for (int i = 0; i < aSize; i++) {
+            pushRear(A[i]);
         }
-      }
-
-      temp = temp->next;
-    }
-    cout << "]";
-    if (printFile) {
-      fout << "]";
-    }
-    cout << endl;
-    if (printFile) {
-      fout << endl;
-    }
-  }
-
-  // pushes new number to the front of the list
-
-  void pushFront(int x) {
-    Node *tempPtr = new Node(x);
-
-    // empty list make head and tail
-    // point to new value
-    if (!head) {
-      head = tail = tempPtr;
-
-      // otherwise adjust head pointer
-    } else {
-      tempPtr->next = head;
-      head = tempPtr;
-    }
-    size++;
-  }
-
-  // pushes value of another list into this current list
-  // the values are loaded in reverse to they come our in order
-  void pushFront(const MedVector &other) {
-    Node *otherPtr = other.head;
-    int *tempData = new int[other.size];
-
-    // load other list into array
-    int i = 0;
-    while (otherPtr) {
-      tempData[i] = otherPtr->data;
-      otherPtr = otherPtr->next;
-      ++i;
     }
 
-    for (int i = other.size - 1; i >= 0; i--) {
-      pushFront(tempData[i]);
+    /**
+     *  function Overloaded Constructor
+     *
+     *  parameters string infileName - file to open and read
+     *
+     * Assumes infile will contain numbers only delimited by spaces or
+     * new lines.
+     */
+    Medvector(string infileName) {
+        init();
+
+        ifstream infile;
+        int x = 0;
+
+        infile.open(infileName);
+        while (!infile.eof()) {
+            infile >> x;
+            pushRear(x);
+        }
     }
-    
-  }
 
-  // funciton to add a value to the end of the vector
-  void pushRear(int x) {
-    Node *tempptr = new Node(x);
+    /**
+     *  function Copy Constructor
+     *
+     *  parameters Medvector &other
+     */
+    Medvector(const Medvector& other) {
+        init();
 
-    if (!head) {
-      head = tail = tempptr;
-    } else {
-      
-      tail->next = tempptr;
-      tail = tempptr;
-    
-      }
-    size++;
-  }
-
-
-  int popRear() {
-    Node *travel = head;
-    while (travel->next != tail) {
-      travel = travel->next;
-    }
-    int tempData = tail->data;
-    delete tail;
-    tail = travel;
-    travel->next = nullptr;
-    size--;
-    return tempData;
-    
-  }
-
-  // funciton to push values from the intial list
-  void pushRear(const MedVector &other) {
-    Node *otherPtr = other.head; // get copy of other lists head
-
-    while (otherPtr) { // traverse and add
-      pushRear(otherPtr->data);
-      otherPtr = otherPtr->next;
-   
-    }
-  }
-
-
-  // friend ostream &operator<<(ostream &os, const MedVector &rhs) {
-  //   Node *temp = rhs.head;
-
-  //   while (temp) {
-  //     os << temp->data;
-  //     if (temp->next) {
-  //       os << "->";
-  //     }
-  //     temp = temp->next;
-  //   }
-  //   os << endl;
-  //   return os;
-  // }
-
-
-  int popFront() {
-
-    if (head) {
-
-      Node *temp = head;
-
-      head = head->next;
-      delete temp;
-      head->previous = NULL;
-      temp = NULL;
-        size--;
-    }
-    return head->data;
-  }
-
-
-  void inOrderPush(int val) {
-    {
-      // Create new node
-      Node *temp = new Node(val);
-
-      // Check if empty list
-      if (head == NULL) {
-        head = temp;
-        tail = temp;
-      } else {
-
-        if (temp->data < head->data)
-          pushFront(val);
-        else {
-
-          Node *traverse = head;
-          Node *trailing = NULL;
-
-          while (traverse && temp->data > traverse->data) {
-
-            trailing = traverse;
-            // Traverse moves on to the next node
+        Node* traverse = other.head;
+        while (traverse) {		//while loop that traverses the whole list and pushes the data from the V2 to V1
+            pushRear(traverse->data);
             traverse = traverse->next;
-          }
-
-          if (traverse == NULL)
-            pushRear(val);
-
-          else {
-            temp->next = traverse;
-            traverse->previous = temp;
-            trailing->next = temp;
-            temp->previous = trailing;
-          }
         }
-      }
     }
 
-    // allowing access to the Medvector
-  }
-
-
-  int popAt(int d) {
-    Node *travel;
-    Node *traveling;
-    travel = head;
-    int count=0;
-    
-  for( count=0; count < d;){
-    traveling = travel;
-      travel = travel-> next;
-    count++;
-  }
-       if (count == d){
-         traveling-> next= travel->next;
-       }
-    return travel->data ;
-   }
-    
-  
-  int find(int d) {
-    int count=0;
-    
-    Node* travel;
-    Node* traveling;
-    travel =head;
-    
-    while( d !=travel->data ){
-      traveling = travel;
-      travel = travel-> next;
-      count++;
-
-      if(travel== NULL){
-        return -1;
-      }
-      }
-  
-    return count;
+    /**
+     *  function - Initialize the data members so we don't
+     *      have duplicate lines in each constructor.
+     *
+     */
+    void init() {
+        head = tail = NULL;
+        infileName = " "; 
+        size = 0;
+        sorted = 0;
     }
 
 
-/* Start of program 2: overloading operators and implimenting them 
-******************************************************************
-*In this section of this program we will overloading more operators 
-* in order to increase the functionality of our individual vecter 
-* classes.
-*
-******************************************************************
-*/
+    /**
+     *  function Public version of inOrder push.
+     *
+     *  parameters x
+     */
+    void  Pushinorder(int x) {
+        if (!sorted) {
+            sortList();
+        }
 
-friend ofstream& operator<<(ofstream&, const MedVector&); 
-	
-friend ostream& operator<<(ostream&, const MedVector&); 
+        if (!head) {
+            pushFront(x);  // call push front for empty list (or pushRear would work)
+        }
+        else if (x < head->data) {
+            pushFront(x);  // call push front if x is less than head
+        }
+        else if (x > tail->data) {
+            pushRear(x);  // call push rear if x > tail
+        }
+        else {
+            _ Pushinorder(x);  // call private version of push in order
+        }
+    }
 
-friend bool operator==(const MedVector&, const MedVector&);
+    /**
+     *  function Sort the current values in the linked list.
+     *
+     *  returns None
+     */
+    void sortList() {
+        Node* newFront = head;
 
-friend MedVector& operator/(const MedVector&, const MedVector&);
+        while (newFront->next) {
+            Node* smallest = newFront;
+            Node* current = newFront;
+            int   minimum = 1000000000;
 
-friend MedVector& operator*(const MedVector&, const MedVector&);
+            while (current) {
+                if (current->data < minimum) {
+                    smallest = current;
+                    minimum = current->data;
+                }
+                current = current->next;
+            }
 
-friend MedVector& operator-(const MedVector&, const MedVector&);
+            smallest->data = newFront->data;
+            newFront->data = minimum;
+            newFront = newFront->next;
+        }
 
-friend MedVector& operator+(const MedVector&, const MedVector&);
+        sorted = true;
+    }
 
+    /**
+     *  function Add value to front of list.
+     *
+     *  parameters x
+     */
+    void pushFront(int x) {
+        Node* tempPtr = new Node(x);
+
+        // empty list make head and tail
+        // point to new value
+        if (!head) {
+            head = tail = tempPtr; 
+            // otherwise adjust head pointer
+        }
+        else {
+            tempPtr->next = head; 
+            head = tempPtr; 
+        }
+
+        size++;
+    }
+
+    /**
+     *  function This method loads values from 'other' list in 'this' list.
+     *          It loads an array first so we can process the values in
+     *          reverse so they end up on 'this' list in the proper order.
+     *          If we didn't use the array, we would reverse the values
+     *          from the 'other' list.
+     *
+     *  depends - Uses `pushFront(int)`
+     *  parameters Medvector& other
+     *  return None
+     */
+    void pushFront(const Medvector& other) {
+        Node* otherPtr = other.head;           // get copy of other lists head
+        int* tempData = new int[other.size];  // allocate memory to hold values
+
+        // load other list into array
+        int i = 0;
+        while (otherPtr) {
+            tempData[i] = otherPtr->data;
+            otherPtr = otherPtr->next;
+            ++i; 
+        }
+
+        // process list in reverse in order to keep them
+        // in their original order.
+        for (int i = other.size - 1; i >= 0; i--) {
+            pushFront(tempData[i]); 
+        }
+    }
+
+    /**
+     *  function -  Add 'other' list's values to end of 'this' list.
+     *  note - Uses `pushRear(int)`
+     *  parameters Medvector& other
+     *  return None
+     */
+    void pushRear(const Medvector& other) {
+        Node* otherPtr = other.head;  // get copy of other lists head
+
+        while (otherPtr) {  // traverse and add
+            pushRear(otherPtr->data);
+            otherPtr = otherPtr->next;
+        }
+    }
+
+    /**
+     *  function Push value onto list at soecified position, if it exists.
+     *
+     *  parameters int i - location index
+     *  parameters inr x - value to add
+     *  return bool - true add successful / false add failed
+     */
+    bool pushAt(int i, int x) {
+        if (i >= size) {
+            return false;
+        }
+
+        Node* tempPtr = new Node(x);  // allocate new node
+        Node* prev = head;            // get previous and next pointers
+        Node* curr = head;
+
+        while (i > 0) {  // loop to find proper location
+            prev = curr;
+            curr = curr->next;
+            i--;
+        }
+
+        tempPtr->next = prev->next;  // add new node in its proper position
+        prev->next = tempPtr;
+
+        size++;  // add to size :)
+        return true;
+    }
+
+    /**
+     *  function - Add value to rear of list
+     *
+     *  parameters int x - value to be added
+     *  return None
+     */
+    void pushRear(int x) {
+        Node* tempPtr = new Node(x);
+
+        if (!head) {
+            head = tail = tempPtr;
+
+        }
+        else {
+            tail->next = tempPtr;
+            tail = tempPtr;
+        }
+        size++;  // add to size of list
+    }
+
+    friend ostream& operator<<(ostream& os, const Medvector& rhs) {
+        Node* temp = rhs.head;  // temp pointer copies head
+
+        while (temp) {  // this loops until temp is NULL
+            // same as `while(temp != NULL)`
+
+            os << temp->data;  // print data from Node
+            if (temp->next) {
+                os << "->";
+            }
+            temp = temp->next;  // move to next Node
+        }
+        os << endl;
+        return os;
+    }
+
+    /**
+     *  function Destroy the My Vector object
+     *
+     */
+    ~Medvector() {
+        Node* curr = head;
+        Node* prev = head;
+
+        while (curr) {
+            prev = curr;
+            curr = curr->next;
+            cout << "deleting: " << prev->data << endl;
+            delete prev;
+        }
+    }
+
+    
+    //START OF PROGRAM 2
+    
+
+    //Overload << (ostream) so that printing to std out is easy
+    friend ofstream& operator<<(ofstream&, const Medvector&);
+
+    //Overload << (ofstream) so that printing to out-file is easy.
+    friend ofstream& operator>>(ofstream&, const Medvector&);
+
+    //Overload [] so that your Medvector can be treated as an array
+    //friend Medvector& operator[](const Medvector&, const Medvector&);
+
+    //Overload + (addition)
+    friend Medvector& operator+(const Medvector&, const Medvector&);
+
+    //Overload - (subtraction)
+    friend Medvector& operator-(const Medvector&, const Medvector&);
+
+    //Overload * (multiplication)
+    friend Medvector& operator*(const Medvector&, const Medvector&);
+
+    //Overload / (division)
+    friend Medvector& operator/(const Medvector&, const Medvector&);
+
+    //Overload == (equality)
+    friend bool operator==(const Medvector&, const Medvector&);
+
+    //Overload = (assignment)
+    //friend ofstream& opearator=(ofstream&, const Medvector&);
+    
 };
 
-/* function: Overload the << operator
-purpose: This function is used to overload the << operator so it has the ability to print out the entire list of number.
+//Overload << (ostream) so that printing to std out is easy
+ofstream& operator<<(ofstream& outfile, const Medvector& M) {
+    Node* traverse = M.head;
 
-Parameters: ofstream & , const MedVector
+    while (traverse != NULL) {					//goes through entire list and dispalays as it traverses
+        outfile << traverse->data << " ";
+        traverse = traverse->next;
+    }
 
-Returns: ofstream.
-
-*/
- ofstream& operator<<(ofstream& outfile, const MedVector& V){
-  Node* travel = V.head;
-    while( travel != NULL){
-      outfile << travel->data << " ";
-		travel = travel->next;
-	}
-	return outfile;
-    
+    return outfile;
 }
 
-/* function : this function overloads the << aswell 
-* purpose: prints out the list all at once with a cout call
-* 
-* Parameters: ostream& const MedVector
-*/
+//Overload >> (ofstream) so that printing to out-file is easy.
+ofstream& operator>>(ofstream& os, const Medvector& M) {
+    Node* traverse = M.head;
 
-ostream& operator<<(ostream& os, const MedVector& V) {
-	Node* travel = V.head;
-	while (travel != NULL) {					
-		os << travel->data << " ";
-		travel = travel->next;
-	}
-	return os;
-  }
+    while (traverse != NULL) {					//goes through entire list and dispalays as it traverses
+        os << traverse->data << " ";
+        traverse = traverse->next;
+    }
 
-/* function : This function is used to overload the == operator
-* purpose: This function is used to check if the two vectors being 
-*compared are the same.
-*
-*Parameters: const MedVector& f=first const MedVector& s=second
-*
-*
-*/
-bool operator==(const MedVector& f, const MedVector& s){
-  Node * travelf= f.head;
-  Node * travels= s.head;
-  int sizef=0;
-  int sizes=0;
-  //travel the vectors to check the size
-  while( travelf != NULL){
-    sizef++;
-    travelf = travelf -> next;
-  }
-//travel the second vector to check the size of the second vector
-  while( travels != NULL){
-    sizes++;
-    travels = travels -> next;
-  }
-//if they arent the same size then return false
-  if( sizes> sizef){
-    return false;
-  }
-    //if they arent the same size then return false
-  else if( sizef>sizes){
-    return false;
-  }
-    // if they are the same size check the data if they are the same.
-  else{
-    while( travelf){
-      if( travelf-> data == travels->data){
-        travelf= travelf-> next;
-        travels = travels-> next;
-      }
-      else{
+    return os;
+}
+
+//Overload + (addition)
+Medvector& operator+(const Medvector& a, const Medvector& b) {
+        Medvector M;
+
+        Node* traverse1 = a.head;
+        Node* traverse2 = b.head;
+
+        int aSize = 0;
+        int bSize = 0;
+
+        //  getting the sizes of the vectors that will be added 
+        while (traverse1) {
+            aSize++;
+            traverse1 = traverse1->next;
+        }
+        while (traverse2) {
+            bSize++;
+            traverse2 = traverse2->next;
+        }
+
+        // repointing traverse to heads
+        traverse1 = a.head;
+        traverse2 = b.head;
+        // checks if the first vector is larger that the other 
+        if (aSize > bSize) {
+            // adds the elements of both vectors and pushes to the rear 
+            for (int i = 0; i != bSize; i++) {
+                M.pushRear(traverse1->data + traverse2->data);
+                traverse1 = traverse1->next;
+                traverse2 = traverse2->next;
+            }
+            // pushes the remaining elements of the first vector
+            while (traverse1) {
+                M.pushRear(traverse1->data);
+                traverse1 = traverse1->next;
+            }
+            delete traverse1;
+            delete traverse2;
+            return M;
+        }
+
+        // checks if the second vector is larger than the other 
+        else if (bSize > aSize) {
+            // adds the elements and pushes to new vector
+            for (int i = 0; i != aSize; i++) {
+                M.pushRear(traverse1->data + traverse2->data);
+                traverse1 = traverse1->next;
+                traverse2 = traverse2->next;
+            }
+            //pushes the remaining elements in the second vector 
+            while (traverse2) {
+                M.pushRear(traverse2->data);
+                traverse2 = traverse2->next;
+            }
+            delete traverse1;
+            delete traverse2;
+            return M;
+        }
+
+        else {
+            // adds the elements and pushes them to the new vector
+            while (traverse1) {
+                M.pushRear(traverse1->data + traverse2->data);
+                traverse1 = traverse1->next;
+                traverse2 = traverse2->next;
+            }
+            delete traverse1;
+            delete traverse2;
+            return M;
+        }
+
+}
+
+//Overload - (subtraction)
+Medvector& operator-(const Medvector& a, const Medvector& b) {
+    Medvector M;
+
+    Node* traverse1 = a.head;
+    Node* traverse2 = b.head;
+
+    int aSize = 0;
+    int bSize = 0;
+
+    //  getting the sizes of the vectors that will be added 
+    while (traverse1) {
+        aSize++;
+        traverse1 = traverse1->next;
+    }
+    while (traverse2) {
+        bSize++;
+        traverse2 = traverse2->next;
+    }
+
+    // repointing traverse to heads
+    traverse1 = a.head;
+    traverse2 = b.head;
+    // checks if the first vector is larger that the other 
+    if (aSize > bSize) {
+        // adds the elements of both vectors and pushes to the rear 
+        for (int i = 0; i != bSize; i++) {
+            M.pushRear(traverse1->data - traverse2->data);
+            traverse1 = traverse1->next;
+            traverse2 = traverse2->next;
+        }
+        // pushes the remaining elements of the first vector
+        while (traverse1) {
+            M.pushRear(traverse1->data);
+            traverse1 = traverse1->next;
+        }
+        delete traverse1;
+        delete traverse2;
+        return M;
+    }
+
+    // checks if the second vector is larger than the other 
+    else if (bSize > aSize) {
+        // adds the elements and pushes to new vector
+        for (int i = 0; i != aSize; i++) {
+            M.pushRear(traverse1->data - traverse2->data);
+            traverse1 = traverse1->next;
+            traverse2 = traverse2->next;
+        }
+        //pushes the remaining elements in the second vector 
+        while (traverse2) {
+            M.pushRear(traverse2->data);
+            traverse2 = traverse2->next;
+        }
+        delete traverse1;
+        delete traverse2;
+        return M;
+    }
+
+    else {
+        // adds the elements and pushes them to the new vector
+        while (traverse1) {
+            M.pushRear(traverse1->data - traverse2->data);
+            traverse1 = traverse1->next;
+            traverse2 = traverse2->next;
+        }
+        delete traverse1;
+        delete traverse2;
+        return M;
+    }
+}
+
+//Overload * (multiplication)
+Medvector& operator*(const Medvector& a, const Medvector& b) {
+    Medvector M;
+
+    Node* traverse1 = a.head;
+    Node* traverse2 = b.head;
+
+    int aSize = 0;
+    int bSize = 0;
+
+    //  getting the sizes of the vectors that will be added 
+    while (traverse1) {
+        aSize++;
+        traverse1 = traverse1->next;
+    }
+    while (traverse2) {
+        bSize++;
+        traverse2 = traverse2->next;
+    }
+
+    // repointing traverse to heads
+    traverse1 = a.head;
+    traverse2 = b.head;
+    // checks if the first vector is larger that the other 
+    if (aSize > bSize) {
+        // adds the elements of both vectors and pushes to the rear 
+        for (int i = 0; i != bSize; i++) {
+            M.pushRear(traverse1->data * traverse2->data);
+            traverse1 = traverse1->next;
+            traverse2 = traverse2->next;
+        }
+        // pushes the remaining elements of the first vector
+        while (traverse1) {
+            M.pushRear(traverse1->data);
+            traverse1 = traverse1->next;
+        }
+        delete traverse1;
+        delete traverse2;
+        return M;
+    }
+
+    // checks if the second vector is larger than the other 
+    else if (bSize > aSize) {
+        // adds the elements and pushes to new vector
+        for (int i = 0; i != aSize; i++) {
+            M.pushRear(traverse1->data * traverse2->data);
+            traverse1 = traverse1->next;
+            traverse2 = traverse2->next;
+        }
+        //pushes the remaining elements in the second vector 
+        while (traverse2) {
+            M.pushRear(traverse2->data);
+            traverse2 = traverse2->next;
+        }
+        delete traverse1;
+        delete traverse2;
+        return M;
+    }
+
+    else {
+        // adds the elements and pushes them to the new vector
+        while (traverse1) {
+            M.pushRear(traverse1->data * traverse2->data);
+            traverse1 = traverse1->next;
+            traverse2 = traverse2->next;
+        }
+        delete traverse1;
+        delete traverse2;
+        return M;
+    }
+}
+
+//Overload / (division)
+Medvector& operator/(const Medvector& a, const Medvector& b) {
+    Medvector M;
+
+    Node* traverse1 = a.head;
+    Node* traverse2 = b.head;
+
+    int aSize = 0;
+    int bSize = 0;
+
+    //  getting the sizes of the vectors that will be added 
+    while (traverse1) {
+        aSize++;
+        traverse1 = traverse1->next;
+    }
+    while (traverse2) {
+        bSize++;
+        traverse2 = traverse2->next;
+    }
+
+    // repointing traverse to heads
+    traverse1 = a.head;
+    traverse2 = b.head;
+    // checks if the first vector is larger that the other 
+    if (aSize > bSize) {
+        // adds the elements of both vectors and pushes to the rear 
+        for (int i = 0; i != bSize; i++) {
+            M.pushRear(traverse1->data / traverse2->data);
+            traverse1 = traverse1->next;
+            traverse2 = traverse2->next;
+        }
+        // pushes the remaining elements of the first vector
+        while (traverse1) {
+            M.pushRear(traverse1->data);
+            traverse1 = traverse1->next;
+        }
+        delete traverse1;
+        delete traverse2;
+        return M;
+    }
+
+    // checks if the second vector is larger than the other 
+    else if (bSize > aSize) {
+        // adds the elements and pushes to new vector
+        for (int i = 0; i != aSize; i++) {
+            M.pushRear(traverse1->data / traverse2->data);
+            traverse1 = traverse1->next;
+            traverse2 = traverse2->next;
+        }
+        //pushes the remaining elements in the second vector 
+        while (traverse2) {
+            M.pushRear(traverse2->data);
+            traverse2 = traverse2->next;
+        }
+        delete traverse1;
+        delete traverse2;
+        return M;
+    }
+
+    else {
+        // adds the elements and pushes them to the new vector
+        while (traverse1) {
+            M.pushRear(traverse1->data / traverse2->data);
+            traverse1 = traverse1->next;
+            traverse2 = traverse2->next;
+        }
+        delete traverse1;
+        delete traverse2;
+        return M;
+    }
+}
+
+//Overload == (equality)
+bool operator==(const Medvector& a, const Medvector& b) {
+    Node* traverse1 = a.head;
+    Node* traverse2 = b.head;
+
+    int aSize = 0;
+    int bSize = 0;
+    int total = 0;
+
+    //  getting the sizes of the vectors that will be added 
+    while (traverse1) {
+        aSize++;
+        traverse1 = traverse1->next;
+    }
+    while (traverse2) {
+        bSize++;
+        traverse2 = traverse2->next;
+    }
+
+    // repointing traverse to heads
+    traverse1 = a.head;
+    traverse2 = b.head;
+    // checks if the first vector is larger that the other 
+    if (aSize > bSize) {
         return false;
-      }
     }
-  }
-  }
-/*function:overloads the operator "/" 
-*purpose: this function overloads the / operator so that we will be 
-*able to divide two vectors of the same size
-*
-*Parameters: const MedVector & , const MedVector &
-*
-*Returns N= New Vector once the vectors are divided
-*/
- MedVector& operator/(const MedVector& f, const MedVector&s){
-  MedVector N;
-  Node * travelf= f.head;
-  Node * travels= s.head;
-  int sizef=0;
-  int sizes=0;
-  //travel the vectors to check the size
-  while( travelf != NULL){
-    sizef++;
-    travelf = travelf -> next;
-  }
-//travel the second vector to check the size of the second vector
-  while( travels != NULL){
-    sizes++;
-    travels = travels -> next;
-  }
-//if the first vector is larger than the second vector 
-  if(sizef> sizes){
-    for( int i= 0; i <= sizes;i++){
-      N.pushRear ( travelf-> data/ travels-> data);
-        travelf= travelf-> next;
-        travels= travels ->next;
-    }
-    //push the rest of the larger vector
-    while(travelf){
-      N.pushRear(travelf->data);
-        travelf= travelf-> next;
-    }
-    return N;
-  }
-    //if the second vector is larger than the first vector 
-  else if( sizes>sizef){
-    for(int i=0; i <= sizef; i++){
-      N.pushRear(travels->data/ travelf->data);
-      travels= travels->next;
-      travelf= travelf->next;  
-    }
-    //Push the rest of the bigger vector
-    while(travels){
-      N.pushRear(travels->data);
-      travels= travels-> next;
-    }
-    return N;
-  
-  }
-    // if they are the same size divide the data within the vectors
-  else{
-    while(travelf){
-      N.pushRear(travelf->data/ travels->data);
-      travelf= travelf->next;
-      travels= travels-> next;
-    }
-      return N;
 
-      }
-   }
-  
-/* function: overload the "*" operator
-*
-*Purpose:This function allows the ablity to mulitply the values in *two vectors
-*
-*Parameters: const MedVector& , const Medvecotor &
-*
-*Return: N= new vector; the result of the multiplying of two vector
-*/
-  
-   MedVector& operator*(const MedVector& f, const MedVector& s){
-MedVector N;
-  Node * travelf= f.head;
-  Node * travels= s.head;
-  int sizef=0;
-  int sizes=0;
-  //travel the vectors to check the size
-  while( travelf != NULL){
-    sizef++;
-    travelf = travelf -> next;
-  }
-//travel the second vector to check the size of the second vector
-  while( travels != NULL){
-    sizes++;
-    travels = travels -> next;
-  }
-//if the first vector is larger than the second vector 
-  if(sizef> sizes){
-    for( int i= 0; i <= sizes;i++){
-      N.pushRear ( travelf-> data* travels-> data);
-        travelf= travelf-> next;
-        travels= travels ->next;
+    // checks if the second vector is larger than the other 
+    else if (bSize > aSize) {
+        return false;
     }
-    //push the rest of the larger vector
-    while(travelf){
-      N.pushRear(travelf->data);
-        travelf= travelf-> next;
-    }
-    return N;
-  }
-    //if the second vector is larger than the first vector 
-  else if( sizes>sizef){
-    for(int i=0; i <= sizef; i++){
-      N.pushRear(travels->data * travelf->data);
-      travels= travels->next;
-      travelf= travelf->next;  
-    }
-    //Push the rest of the bigger vector
-    while(travels){
-      N.pushRear(travels->data);
-      travels= travels-> next;
-    }
-    return N;
-  
-  }
-    // if they are the same size multiply the data within the vectors
-  else{
-    while(travelf){
-      N.pushRear(travelf->data * travels->data);
-      travelf= travelf->next;
-      travels= travels-> next;
-    }
-      return N;
 
-      }
+    else {
+        // adds the elements and pushes them to the new vector
+        while (traverse1) {
+            if (traverse1->data == traverse2->data) {
+                // increment count every time the elements are equal
+                total++;
+            }
+            traverse1 = traverse1->next;
+            traverse2 = traverse2->next;
+        }
+        delete traverse1;
+        delete traverse2;
 
-  }
-  
-  
-  
-  /* Function: this function overload the  
-* Purpose: this function provide the functionality to subtract the 
-*values of two different vectors
-*
-*parameters: const MedVector& , Const MedVector&
-*
-*Returns: N= new vecotor; the quotient vector of the two subtracted *vectors
-*
-**/
-
- MedVector& operator-(const MedVector&f, const MedVector&s){
-
-  MedVector N;
-  Node * travelf= f.head;
-  Node * travels= s.head;
-  int sizef=0;
-  int sizes=0;
-  //travel the vectors to check the size
-  while( travelf != NULL){
-    sizef++;
-    travelf = travelf -> next;
-  }
-//travel the second vector to check the size of the second vector
-  while( travels != NULL){
-    sizes++;
-    travels = travels -> next;
-  }
-//if the first vector is larger than the second vector 
-  if(sizef> sizes){
-    for( int i= 0; i <= sizes;i++){
-      N.pushRear ( travelf-> data - travels-> data);
-        travelf= travelf-> next;
-        travels= travels ->next;
+        if (total == aSize) {
+            return true;
+        }
+        else {
+            return false;
+        }
     }
-    //push the rest of the larger vector
-    while(travelf){
-      N.pushRear(travelf->data);
-        travelf= travelf-> next;
-    }
-    return N;
-  }
-    //if the second vector is larger than the first vector 
-  else if( sizes>sizef){
-    for(int i=0; i <= sizef; i++){
-      N.pushRear(travels->data - travelf->data);
-      travels= travels->next;
-      travelf= travelf->next;  
-    }
-    //Push the rest of the bigger vector
-    while(travels){
-      N.pushRear(travels->data);
-      travels= travels-> next;
-    }
-    return N;
-  
-  }
-    // if they are the same size divide the data within the vectors
-  else{
-    while(travelf){
-      N.pushRear(travelf->data - travels->data);
-      travelf= travelf->next;
-      travels= travels-> next;
-    }
-      return N;
+}
 
-    }
-  }
-
-  /* Function: overload the "+" operator
-*
-*purpose: This function allows the two vectors to be added together
-*
-*Parameters: const MedVector& , Const MedVector&
-*
-*Return: N = newvector; the sum vector of the two vectors
-*/
-
-   MedVector& operator+(const MedVector&f, const MedVector&s)
-  {
-     MedVector N;
-  Node * travelf= f.head;
-  Node * travels= s.head;
-  int sizef=0;
-  int sizes=0;
-  //travel the vectors to check the size
-  while( travelf != NULL){
-    sizef++;
-    travelf = travelf -> next;
-  }
-//travel the second vector to check the size of the second vector
-  while( travels != NULL){
-    sizes++;
-    travels = travels -> next;
-  }
-//if the first vector is larger than the second vector 
-  if(sizef> sizes){
-    for( int i= 0; i <= sizes;i++){
-      N.pushRear ( travelf-> data + travels-> data);
-        travelf= travelf-> next;
-        travels= travels ->next;
-    }
-    //push the rest of the larger vector
-    while(travelf){
-      N.pushRear(travelf->data);
-        travelf= travelf-> next;
-    }
-    return N;
-  }
-    //if the second vector is larger than the first vector 
-  else if( sizes>sizef){
-    for(int i=0; i <= sizef; i++){
-      N.pushRear(travels->data + travelf->data);
-      travels= travels->next;
-      travelf= travelf->next;  
-    }
-    //Push the rest of the bigger vector
-    while(travels){
-      N.pushRear(travels->data);
-      travels= travels-> next;
-    }
-    return N;
-  
-  }
-    // if they are the same size divide the data within the vectors
-  else{
-    while(travelf){
-      N.pushRear(travelf->data + travels->data);
-      travelf= travelf->next;
-      travels= travels-> next;
-    }
-      return N;
-    
-  }
-
-    }
-  
-
-
-
-
-
- //ofstream MedVector::fout;
-
-//overloading the + operator
+ofstream Medvector::fout;
 
 
 int main() {
-  ofstream fout;
-  
-   
-  
-  MedVector V1("input.dat");
-  V1.setFileName("newfile1.out");
+    Medvector V1;
 
-  MedVector V2("input2.dat");
-  V2.setFileName("newfile2.out");
+    V1.pushFront(56);
+    V1.pushFront(42);
+    V1.pushFront(30);
+    V1.pushFront(48);
 
-  MedVector V3("input2.dat");
-  V3.setFileName("newfile3.out");
+    V1.pushFront(V1);
 
-  // Ahmed krubally
-  // 09-16-22
-  // fall 2143
+    cout << V1 << endl;
 
+    V1.sortList();
+    cout << V1 << endl;
 
-  
-  int x = 0;
+    V1.pushAt(3, 88);
+    cout << V1 << endl;
+    V1.sortList();
+    cout << V1 << endl;
 
-  MedVector v1;
-  v1.pushFront(18);
-  v1.pushFront(20);
-  v1.pushFront(25);
-  v1.pushRear(18);
-  v1.pushRear(20);
-  v1.pushRear(25);
-  v1.print();
-  // [25, 20, 18, 18, 20, 25]
+    //main for program 2
 
-  int A[] = {11, 25, 33, 47, 51};
-  MedVector v2(A, 5);
-  v2.print();
-  // [11, 25, 33, 47, 51]
+    int a1[] = { 1, 2, 3, 4, 5 };
+    int a2[] = { 10, 20, 30 };
 
-  v2.pushFront(9);
-  v2.inOrderPush(27);
-  v2.pushRear(63);
-  v2.print();
-  // [9, 11, 25, 33, 47, 51, 63]
+    Medvector V3(a1, 5);
+    Medvector V4(a2, 3);
+    
 
-  v1.pushRear(v2);
-  v1.print();
-  // [25, 20, 18, 18, 20, 25, 9, 11, 25, 33, 47, 51, 63]
+    ofstream outfile;
+    outfile.open("output.txt");
+     
+    //cout << v1[2] << endl;
+    // writes out 3
 
-  x = v1.popFront();
-  x = v1.popFront();
-  x = v1.popFront();
-  v1.print();
-  // [18, 20, 25, 9, 11, 25, 27, 33, 47, 51, 63]
-  cout << x << endl;
-  // 18
+    //v1[4] = 9;
+    // v1 now = [1,2,3,4,9]
 
-  x = v1.popRear();
-  x = v1.popRear();
-  x = v1.popRear();
-  v1.print();
-  // [18, 20, 25, 9, 11, 25, 27, 33]
-  cout << x << endl;
-  // 47
+    cout << V3 << endl;
+    // writes out [1,2,3,4,9] to console.
 
-   x = v2.popAt(3);
-   v2.print();
-  // [9, 11, 25, 33, 47, 51, 63]
-  cout<<x<<endl;
-  // 27
+    outfile << V3 << endl;
+    // writes out [1,2,3,4,9] to your output file.
 
+    Medvector V5 = V3 + V4;
+    cout << V5 << endl;
+    // writes out [11,22,33,4,9] to console.
 
-  
-  x = v2.find(51);
-  cout<<x<<endl;
-  // 5
+    V5 = V3 - V4;
+    cout << V5 << endl;
+    // writes out [-9,-18,-27,4,9] to console.
 
-  x = v2.find(99);
-  cout<<x<<endl;
-  // -1
+    V5 = V3 - V4;
+    cout << V5 << endl;
+    // writes out [9,18,27,4,9] to console.
 
-   V3.pushFront(v1);
- V3.print();
-  //[18, 20, 25, 9, 11, 25, 27, 33]
+    V5 = V3 * V4;
+    cout << V5 << endl;
+    // writes out [10,40,90,4,9] to console.
 
-   V3.pushRear(v2);
-   V3.print();
-  // //[9, 11, 25, 33, 47, 51, 63, 18, 20, 25, 9, 11, 25, 27, 33]
+    V5 = V3 * V4;
+    cout << V5 << endl;
+    // writes out [10,40,90,4,9] to console.['
 
-   MedVector v4("input.dat");
-   v4.pushRear(v1);
-   v4.print();
+    V5 = V3 / V4;
+    cout << V5 << endl;
+    // writes out [0,0,0,4,9] to console.
 
-  fout<< v1;
-  fout<< v2;
-  fout<< V3;
-  fout<< v4;
+    V5 = V4 / V3;
+    cout << V5 << endl;
+    // writes out [10,10,10,4,9] to console.
 
-  
-  // [56, 61, 97, 66, 83, 25, 26, 11, 53, 49, 62, 18, 10, 18, 14, 3, 4, 23,
-  // 18, 24, 26, 27, 54, 14, 12, 45, 65, 98, 56, 97, 15, 84, 98, 9, 11, 25,
-  // 33, 47, 51, 63, 18, 20, 25, 9, 11, 25, 27, 33]
+    cout << (V4 == V3) << endl;
+    // writes 0 to console (false) .
 
-
-  cout<<"======================================================="<<endl;
-
-  int a1[] = { 1, 2, 3, 4, 5 };
-int a2[] = { 10, 20, 30 };
-
-MedVector v7(a1,5);
-MedVector v8(a2,3);
-
-// ofstream fout;
-// ofile.open("output.txt");
-
-//cout << v7[2] << endl;
-// writes out 3
-
-//v7[4] = 9;
-// v1 now = [1,2,3,4,9]
-
-cout << v7 << endl;
-// writes out [1,2,3,4,9] to console.
-
-fout << v7 << endl;
-// writes out [1,2,3,4,9] to your output file.
-
-MedVector v9 = v7 + v8;
-cout << v9 << endl;
-// writes out [11,22,33,4,9] to console.
-
-v9 = v7 - v8;
-cout << v9 << endl;
-// writes out [-9,-18,-27,4,9] to console.
-
-v9 = v8 - v7;
-cout << v9 << endl;
-// writes out [9,18,27,4,9] to console.
-
-v9 = v8 * v7;
-cout << v9 << endl;
-// writes out [10,40,90,4,9] to console.
-
-v9 = v7 * v8;
-cout << v9 << endl;
-// writes out [10,40,90,4,9] to console.
-
-v9 = v7 / v8;
-cout << v9 << endl;
-// writes out [0,0,0,4,9] to console.
-
-v9 = v8 / v7;
-cout << v9 << endl;
-// writes out [10,10,10,4,9] to console.
-
-cout << (v8 == v7) << endl;
-// writes 0 to console (false) .
-
-MedVector v40 = v7;
-cout << (v40 == v7) << endl;
-// writes 1 to console (true) .
+    Medvector V6 = V3;
+    cout << (V6 == V3) << endl;
+    // writes 1 to console (true) . 
+    
+    outfile.close();
 }
-   
-  
