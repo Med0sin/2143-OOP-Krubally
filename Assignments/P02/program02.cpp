@@ -103,10 +103,9 @@ public:
     }
 
     /**
-     *  function Overloaded Constructor
+     *  function: Overloaded Constructor
      *
-     *  parameters int   *A - pointer to array
-     *  parameters int   aSize - size of array
+     *  parameters int *A  pointer to array ,int aSize  size of array
      */
     Medvector(int A[], int aSize) {
         init();
@@ -117,12 +116,9 @@ public:
     }
 
     /**
-     *  function Overloaded Constructor
+     *  function: Overloaded Constructor
      *
-     *  parameters string infileName - file to open and read
-     *
-     * Assumes infile will contain numbers only delimited by spaces or
-     * new lines.
+     *  parameters :string infileName file to open and read
      */
     Medvector(string infileName) {
         init();
@@ -153,10 +149,10 @@ public:
     }
 
     /**
-     *  function - Initialize the data members so we don't
-     *      have duplicate lines in each constructor.
-     *
-     */
+     *  function - Initialize the data members 
+     * parameters: none
+     *   return: void
+     */ 
     void init() {
         head = tail = NULL;
         infileName = " "; 
@@ -167,8 +163,8 @@ public:
 
     /**
      *  function Public version of inOrder push.
-     *
-     *  parameters x
+     *  parameters :int x
+     * returns : none
      */
     void  Pushinorder(int x) {
         if (!sorted) {
@@ -241,15 +237,9 @@ public:
     }
 
     /**
-     *  function This method loads values from 'other' list in 'this' list.
-     *          It loads an array first so we can process the values in
-     *          reverse so they end up on 'this' list in the proper order.
-     *          If we didn't use the array, we would reverse the values
-     *          from the 'other' list.
-     *
-     *  depends - Uses `pushFront(int)`
-     *  parameters Medvector& other
-     *  return None
+     *  function :this loads in the other vector to the front of the vector
+     *  parameters: Medvector& other
+     *  return: None
      */
     void pushFront(const Medvector& other) {
         Node* otherPtr = other.head;           // get copy of other lists head
@@ -271,10 +261,9 @@ public:
     }
 
     /**
-     *  function -  Add 'other' list's values to end of 'this' list.
-     *  note - Uses `pushRear(int)`
-     *  parameters Medvector& other
-     *  return None
+     *  function:  Add first list values to the end of another list
+     *  parameters: Medvector& other
+     *  return: None
      */
     void pushRear(const Medvector& other) {
         Node* otherPtr = other.head;  // get copy of other lists head
@@ -286,11 +275,10 @@ public:
     }
 
     /**
-     *  function Push value onto list at soecified position, if it exists.
+     *  function :Push value onto list at soecified position, if it exists.
      *
-     *  parameters int i - location index
-     *  parameters inr x - value to add
-     *  return bool - true add successful / false add failed
+     *  parameters: int i - location index  inr x - value to add
+     *  return : true add successful / false add failed
      */
     bool pushAt(int i, int x) {
         if (i >= size) {
@@ -315,10 +303,10 @@ public:
     }
 
     /**
-     *  function - Add value to rear of list
+     *  function: Add value to rear of list
      *
-     *  parameters int x - value to be added
-     *  return None
+     *  parameters: int x - value to be added
+     *  return: None
      */
     void pushRear(int x) {
         Node* tempPtr = new Node(x);
