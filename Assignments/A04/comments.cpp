@@ -49,10 +49,10 @@ using namespace std;
 class CircularArrayQue {
 private:
     int *Container;
-    int Front;
-    int Rear;
+    int Front; //variable for the frount
+    int Rear;// varible for the rear
     int QueSize; // items in the queue
-    int CurrentSize;
+    int CurrentSize;//varible for the current size of array
     void init(int size = 0) {
         Front = Rear = CurrentSize = 0;
         QueSize = size;
@@ -63,15 +63,19 @@ private:
     }
 
 public:
+//construnctor 
     CircularArrayQue() {
         Container = new int[10];
         init(10);
     }
+    //overloaded constructor
     CircularArrayQue(int size) {
         Container = new int[size];
         init(size);
     }
-
+//funciton: adds a value to the list
+// parameters: int item
+//return: none
     void Push(int item) {
         if (!Full()) {
             Container[Rear] = item;
@@ -81,7 +85,9 @@ public:
             cout << "FULL!!!!" << endl;
         }
     }
-
+//funciton : removes an iten from the list
+//parameters: none
+//return : int
     int Pop() {
         int temp = Container[Front];
         Front = (Front + 1) % QueSize;
@@ -90,7 +96,7 @@ public:
     }
     friend ostream &operator<<(ostream &os, const CircularArrayQue &other);
 };
-
+//overloaded << operator to impliment the " " with in the printing of the list
 ostream &operator<<(ostream &os, const CircularArrayQue &other) {
 
     for (int i = other.Front; i < other.CurrentSize; i = (i + 1) % other.QueSize) {
